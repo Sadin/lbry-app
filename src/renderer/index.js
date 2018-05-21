@@ -42,9 +42,9 @@ ipcRenderer.on('open-uri-requested', (event, uri, newSession) => {
           })
         );
       }
-    } else if (uri && uri.startsWith(specialURL)) {
+    } else if (uri.startsWith(specialURL)) {
       let navpage;
-      navpage = uri.replace(specialURL,'');
+      navpage = uri.replace(specialURL,'').toLowerCase();;
       app.store.dispatch(doNavigate('/' + navpage));
     } else {
       app.store.dispatch(doNavigate('/show', { uri }));
