@@ -8,7 +8,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { doConditionalAuthNavigate, doDaemonReady, doAutoUpdate } from 'redux/actions/app';
-import { doNotify, doBlackListedOutpointsSubscribe } from 'lbry-redux';
+import { doNotify, doBlackListedOutpointsSubscribe, isURIValid } from 'lbry-redux';
 import { doNavigate } from 'redux/actions/navigation';
 import { doDownloadLanguages, doUpdateIsNightAsync } from 'redux/actions/settings';
 import { doUserEmailVerify } from 'redux/actions/user';
@@ -46,8 +46,15 @@ ipcRenderer.on('open-uri-requested', (event, uri, newSession) => {
       let navpage;
       navpage = uri.replace(specialURL,'').toLowerCase();;
       app.store.dispatch(doNavigate('/' + navpage));
-    } else {
+    } else if (isURIValid (uri)) {
       app.store.dispatch(doNavigate('/show', { uri }));
+    } else {
+      app.store.dispatch(
+      doNotify({
+      message: __('Invalid LBRY URL requested'),
+      displayType: ['snackbar'],
+      })
+    );
     }
   }
 });
