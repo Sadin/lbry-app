@@ -18,7 +18,7 @@ import app from './app';
 import analytics from './analytics';
 
 const { autoUpdater } = remote.require('electron-updater');
-const specialURL = 'lbry://?';
+const appPageURL = 'lbry://?';
 
 autoUpdater.logger = remote.require('electron-log');
 
@@ -42,9 +42,9 @@ ipcRenderer.on('open-uri-requested', (event, uri, newSession) => {
           })
         );
       }
-    } else if (uri.startsWith(specialURL)) {
+    } else if (uri.startsWith(appPageURL)) {
       let navpage;
-      navpage = uri.replace(specialURL,'').toLowerCase();;
+      navpage = uri.replace(appPageURL,'').toLowerCase();
       app.store.dispatch(doNavigate('/' + navpage));
     } else if (isURIValid (uri)) {
       app.store.dispatch(doNavigate('/show', { uri }));
