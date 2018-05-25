@@ -30,21 +30,25 @@ before_script:
   - git lfs pull
 script:
   - |
-    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+    if [ "$TARGET" == "linux" ]; then
       docker run --rm \
         --env-file <(env | grep -iE 'DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS|APPVEYOR_|CSC_|GH_|GITHUB_|BT_|AWS_|STRIP|BUILD_') \
         -v ${PWD}:/project \
         -v ~/.cache/electron:/root/.cache/electron \
         -v ~/.cache/electron-builder:/root/.cache/electron-builder \
         electronuserland/builder:wine \
-        if [ "$TARGET" == "linux" ]; then
-          echo "THIS IS FOR LINUX"
-          /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn build --linux --win --publish onTag"
-        else
-          echo "THIS IS FOR WINDOWS"
-          /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn build --linux --publish onTag"
-        fi
-    else
+        /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn build --linux --publish onTag"
+    fi
+    if [ "$TARGET == "windows" ]; then
+        docker run --rm \
+          --env-file <(env | grep -iE 'DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS|APPVEYOR_|CSC_|GH_|GITHUB_|BT_|AWS_|STRIP|BUILD_') \
+          -v ${PWD}:/project \
+          -v ~/.cache/electron:/root/.cache/electron \
+          -v ~/.cache/electron-builder:/root/.cache/electron-builder \
+          electronuserland/builder:wine \
+          /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn build --win --publish onTag"
+    fi
+    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
       yarn build --publish onTag
     fi
 branches:
