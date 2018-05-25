@@ -38,8 +38,10 @@ script:
         -v ~/.cache/electron-builder:/root/.cache/electron-builder \
         electronuserland/builder:wine \
         if [ "$TARGET" == "linux"]; then
+          echo "THIS IS FOR LINUX"
           /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn build --linux --win --publish onTag"
         else
+        echo "THIS IS FOR WINDOWS"
         /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn build --linux --publish onTag"
     else
       yarn build --publish onTag
