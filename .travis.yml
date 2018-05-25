@@ -30,6 +30,7 @@ before_script:
   - git lfs pull
 script:
   - if [ "$TARGET" == "linux" ]; then
+      echo "BUILDING FOR LINUX_______________________________________"
       docker run --rm \
         --env-file <(env | grep -iE 'DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS|APPVEYOR_|CSC_|GH_|GITHUB_|BT_|AWS_|STRIP|BUILD_') \
         -v ${PWD}:/project \
