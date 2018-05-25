@@ -4,10 +4,13 @@ matrix:
       osx_image: xcode9.2
       language: node_js
       node_js: "9"
-      env:
-        - ELECTRON_CACHE=$HOME/.cache/electron
-        - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
     - os: linux
+      env: TARGET=linux
+      services: docker
+      language: node_js
+      node_js: "9"
+    - os: linux
+      env: TARGET=windows
       services: docker
       language: node_js
       node_js: "9"
