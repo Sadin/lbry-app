@@ -41,8 +41,9 @@ script:
           echo "THIS IS FOR LINUX"
           /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn build --linux --win --publish onTag"
         else
-        echo "THIS IS FOR WINDOWS"
-        /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn build --linux --publish onTag"
+          echo "THIS IS FOR WINDOWS"
+          /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn build --linux --publish onTag"
+        fi
     else
       yarn build --publish onTag
     fi
