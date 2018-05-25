@@ -48,7 +48,7 @@ script:
         /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn build --win --publish onTag";
     fi
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-      yarn build --publish onTag
+      yarn build --publish onTag;
     fi
 branches:
   except:
